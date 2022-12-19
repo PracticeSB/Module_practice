@@ -1,28 +1,24 @@
 import datetime as dt
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from random import random
+import random
 
 
-class Animate:
-    def __init__(self, sensor):
+class Animate():
+    def __init__(self):
         # Create figure for plotting
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(1, 1, 1)
         self.xs = []
         self.ys = []
-        self.ylabel = sensor
-        self.readings = 20
+        self.readings = 30
 
     # This function is called periodically from FuncAnimation
-    def _update(self, i):
-
-        # Read temperature (Celsius) from TMP102
-        temp_c = random()
-
+    def _update(self,i):
+        #temp_c = random.random()
         # Add x and y to lists
         self.xs.append(dt.datetime.now().strftime('%H:%M:%S.%f'))
-        self.ys.append(temp_c)
+        self.ys.append(random.random())
 
         # Limit x and y lists to 20 items
         self.xs = self.xs[-self.readings:]
@@ -35,16 +31,16 @@ class Animate:
         # Format plot
         plt.xticks(rotation=45, ha='right')
         plt.subplots_adjust(bottom=0.30)
-        plt.title(self.ylabel + ' over Time')
-        plt.ylabel(self.ylabel)
+        #self.ax.set_ylabel(self.sensor)
 
     def start(self):
         print('Starting')
         # Set up plot to call animate() function periodically
-        self.anim = animation.FuncAnimation(self.fig, self._update, interval=10)
+        self.anim = animation.FuncAnimation(self.fig, self._update,interval=50)
         plt.show()
 
-
-rand = Animate('Torque')
-rand.start()
+if __name__ == "__main__":
+    while True:
+        rand = Animate()
+        rand.start()
 
